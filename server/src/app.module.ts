@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common'
+import { AuthzModule } from './authz/authz.module'
 
 @Module({
-  imports: [],
+  imports: [AuthzModule],
   controllers: [],
   providers: [],
 })

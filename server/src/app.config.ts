@@ -21,6 +21,9 @@ class EnvironmentVariables {
 
   @IsString()
   readonly AUTH0_CLIENT_ID: string
+
+  @IsString()
+  MONGODB_URI: string
 }
 
 function validateConfig(config: Record<string, unknown>) {

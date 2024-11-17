@@ -1,15 +1,33 @@
 import { Injectable } from '@nestjs/common'
 import { CreateWorkspaceDto } from './dto/create-workspace.dto'
 import { UpdateWorkspaceDto } from './dto/update-workspace.dto'
+import { InjectModel } from '@nestjs/mongoose'
+import { Workspace } from './schemas/workspace.schema'
+import { Model } from 'mongoose'
 
 @Injectable()
 export class WorkspacesService {
-  create(createWorkspaceDto: CreateWorkspaceDto) {
-    return 'This action adds a new workspace'
+  constructor(
+    @InjectModel(Workspace.name) private workspaceModel: Model<Workspace>
+  ) {}
+
+  create(
+    createWorkspaceDto: CreateWorkspaceDto,
+    ownerId: string
+  ): Promise<Workspace> {
+    return this.workspaceModel.create({
+      ...createWorkspaceDto,
+      createdAt: new Date(),
+      owner: ownerId,
+    })
   }
 
-  findAll() {
-    return `This action returns all workspaces`
+  findAll(userId: string): Promise<Workspace[]> {
+    return this.workspaceModel
+      .find({
+        $or: [{ owner: userId }, { members: { $in: [userId] } }],
+      })
+      .exec()
   }
 
   findOne(id: number) {

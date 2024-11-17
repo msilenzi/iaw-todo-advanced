@@ -27,8 +27,8 @@ async function bootstrap() {
   // Swagger
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Floorplan API')
-    .setDescription('Floorplan API')
+    .setTitle('Todo Advanced API')
+    .setDescription('Todo Advanced API')
     .setVersion('1.0')
     .addOAuth2(
       {
@@ -55,7 +55,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig, options)
 
   const customOptions: SwaggerCustomOptions = {
-    customSiteTitle: 'Floorplan API',
+    customSiteTitle: 'Todo Advanced API',
     swaggerOptions: {
       initOAuth: {
         // this will pre-fill the client id in the Swagger authorization form

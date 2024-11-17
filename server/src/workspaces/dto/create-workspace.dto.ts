@@ -1,11 +1,9 @@
-import { IsMongoId, IsNotEmpty, IsString } from 'class-validator'
-import { Types } from 'mongoose'
+import { Transform } from 'class-transformer'
+import { IsNotEmpty, IsString } from 'class-validator'
 
 export class CreateWorkspaceDto {
   @IsString()
   @IsNotEmpty()
+  @Transform(({ value }) => value.trim())
   readonly name: string
-
-  @IsMongoId()
-  readonly owner: Types.ObjectId
 }

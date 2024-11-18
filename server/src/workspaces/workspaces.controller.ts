@@ -39,30 +39,37 @@ export class WorkspacesController {
     return this.workspacesService.findAll(req.user.sub)
   }
 
-  @Get(':id')
-  @ApiOperation({ summary: 'Get a workspace' })
-  @ApiParam({ name: 'id', type: String })
+  @Get(':workspaceId')
+  @ApiOperation({ summary: 'Get details of a specific workspace' })
+  @ApiParam({ name: 'workspaceId', type: String })
   findOne(
-    @Param('id', ParseMongoIdPipePipe) id: Types.ObjectId,
+    @Param('workspaceId', ParseMongoIdPipePipe) workspaceId: Types.ObjectId,
     @Req() req: any
   ): Promise<Workspace> {
-    return this.workspacesService.findOne(id, req.user.sub)
+    return this.workspacesService.findOne(workspaceId, req.user.sub)
   }
 
-  @Patch(':id')
-  @ApiOperation({ summary: 'Update a workspace' })
-  @ApiParam({ name: 'id', type: String })
+  @Patch(':workspaceId')
+  @ApiOperation({ summary: 'Update workspace details' })
+  @ApiParam({ name: 'workspaceId', type: String })
   update(
-    @Param('id', ParseMongoIdPipePipe) id: Types.ObjectId,
+    @Param('workspaceId', ParseMongoIdPipePipe) workspaceId: Types.ObjectId,
     @Body() updateWorkspaceDto: UpdateWorkspaceDto,
     @Req() req: any
   ): Promise<Workspace> {
-    return this.workspacesService.update(id, updateWorkspaceDto, req.user.sub)
+    return this.workspacesService.update(
+      workspaceId,
+      updateWorkspaceDto,
+      req.user.sub
+    )
   }
 
-  @Delete(':id')
+  @Delete(':workspaceId')
   @ApiOperation({ summary: 'Delete a workspace' })
-  remove(@Param('id') id: Types.ObjectId, @Req() req: any) {
-    return this.workspacesService.remove(id, req.user.sub)
+  remove(
+    @Param('workspaceId', ParseMongoIdPipePipe) workspaceId: Types.ObjectId,
+    @Req() req: any
+  ) {
+    return this.workspacesService.remove(workspaceId, req.user.sub)
   }
 }

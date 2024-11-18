@@ -1,20 +1,22 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
-  UseGuards,
+  Get,
+  Param,
+  Patch,
+  Post,
   Req,
+  UseGuards,
 } from '@nestjs/common'
-import { WorkspacesService } from './workspaces.service'
+import { AuthGuard } from '@nestjs/passport'
+import { ApiBearerAuth, ApiOperation, ApiParam } from '@nestjs/swagger'
+import { Types } from 'mongoose'
+import { ParseMongoIdPipePipe } from 'src/common/pipes/parse-mongo-id-pipe.pipe'
 import { CreateWorkspaceDto } from './dto/create-workspace.dto'
 import { UpdateWorkspaceDto } from './dto/update-workspace.dto'
-import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger'
-import { AuthGuard } from '@nestjs/passport'
 import { Workspace } from './schemas/workspace.schema'
+import { WorkspacesService } from './workspaces.service'
 
 @Controller('workspaces')
 @ApiBearerAuth('Auth0')
@@ -38,8 +40,13 @@ export class WorkspacesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.workspacesService.findOne(+id)
+  @ApiOperation({ summary: 'Get a workspace' })
+  @ApiParam({ name: 'id', type: String })
+  findOne(
+    @Param('id', ParseMongoIdPipePipe) id: Types.ObjectId,
+    @Req() req: any
+  ): Promise<Workspace> {
+    return this.workspacesService.findOne(id, req.user.sub)
   }
 
   @Patch(':id')

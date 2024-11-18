@@ -1,9 +1,13 @@
-import { Injectable } from '@nestjs/common'
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
+import { InjectModel } from '@nestjs/mongoose'
+import { Model, Types } from 'mongoose'
 import { CreateWorkspaceDto } from './dto/create-workspace.dto'
 import { UpdateWorkspaceDto } from './dto/update-workspace.dto'
-import { InjectModel } from '@nestjs/mongoose'
 import { Workspace } from './schemas/workspace.schema'
-import { Model } from 'mongoose'
 
 @Injectable()
 export class WorkspacesService {
@@ -11,7 +15,7 @@ export class WorkspacesService {
     @InjectModel(Workspace.name) private workspaceModel: Model<Workspace>
   ) {}
 
-  create(
+  async create(
     createWorkspaceDto: CreateWorkspaceDto,
     ownerId: string
   ): Promise<Workspace> {
@@ -22,7 +26,7 @@ export class WorkspacesService {
     })
   }
 
-  findAll(userId: string): Promise<Workspace[]> {
+  async findAll(userId: string): Promise<Workspace[]> {
     return this.workspaceModel
       .find({
         $or: [{ owner: userId }, { members: { $in: [userId] } }],
@@ -30,8 +34,23 @@ export class WorkspacesService {
       .exec()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} workspace`
+  async findOne(
+    workspaceId: Types.ObjectId,
+    userId: string
+  ): Promise<Workspace> {
+    const workspace = await this.workspaceModel.findById(workspaceId).exec()
+
+    console.log({ workspace, workspaceId, userId })
+
+    if (!workspace) {
+      throw new NotFoundException(`Workspace with ID ${workspaceId} not found`)
+    }
+    if (workspace.owner !== userId && !workspace.members.includes(userId)) {
+      throw new ForbiddenException(
+        'You do not have permission to access this workspace'
+      )
+    }
+    return workspace
   }
 
   update(id: number, updateWorkspaceDto: UpdateWorkspaceDto) {

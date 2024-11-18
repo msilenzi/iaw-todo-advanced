@@ -15,10 +15,7 @@ export class WorkspacesService {
     @InjectModel(Workspace.name) private workspaceModel: Model<Workspace>
   ) {}
 
-  async create(
-    createWorkspaceDto: CreateWorkspaceDto,
-    ownerId: string
-  ): Promise<Workspace> {
+  async create(createWorkspaceDto: CreateWorkspaceDto, ownerId: string) {
     return this.workspaceModel.create({
       ...createWorkspaceDto,
       createdAt: new Date(),
@@ -26,7 +23,7 @@ export class WorkspacesService {
     })
   }
 
-  async findAll(userId: string): Promise<Workspace[]> {
+  async findAll(userId: string) {
     return this.workspaceModel
       .find({
         $or: [{ owner: userId }, { members: { $in: [userId] } }],
@@ -34,13 +31,8 @@ export class WorkspacesService {
       .exec()
   }
 
-  async findOne(
-    workspaceId: Types.ObjectId,
-    userId: string
-  ): Promise<Workspace> {
+  async findOne(workspaceId: Types.ObjectId, userId: string) {
     const workspace = await this.workspaceModel.findById(workspaceId).exec()
-
-    console.log({ workspace, workspaceId, userId })
 
     if (!workspace) {
       throw new NotFoundException(`Workspace with ID ${workspaceId} not found`)
@@ -53,8 +45,19 @@ export class WorkspacesService {
     return workspace
   }
 
-  update(id: number, updateWorkspaceDto: UpdateWorkspaceDto) {
-    return `This action updates a #${id} workspace`
+  async update(
+    workspaceId: Types.ObjectId,
+    updateWorkspaceDto: UpdateWorkspaceDto,
+    userId: string
+  ) {
+    const workspace = await this.findOne(workspaceId, userId)
+    if (workspace.owner !== userId) {
+      throw new ForbiddenException(
+        'You do not have permission to modify this workspace'
+      )
+    }
+    Object.assign(workspace, updateWorkspaceDto)
+    return workspace.save()
   }
 
   remove(id: number) {

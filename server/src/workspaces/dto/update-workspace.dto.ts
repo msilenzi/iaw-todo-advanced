@@ -1,13 +1,4 @@
-import { Transform } from 'class-transformer'
-import { IsBoolean, IsOptional, IsString } from 'class-validator'
+import { PartialType } from '@nestjs/swagger'
+import { CreateWorkspaceDto } from './create-workspace.dto'
 
-export class UpdateWorkspaceDto {
-  @IsOptional()
-  @IsString()
-  @Transform(({ value }) => value.trim())
-  readonly name?: string
-
-  @IsOptional()
-  @IsBoolean()
-  readonly isActive?: boolean
-}
+export class UpdateWorkspaceDto extends PartialType(CreateWorkspaceDto) {}

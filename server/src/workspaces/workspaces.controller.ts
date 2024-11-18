@@ -50,11 +50,14 @@ export class WorkspacesController {
   }
 
   @Patch(':id')
+  @ApiOperation({ summary: 'Update a workspace' })
+  @ApiParam({ name: 'id', type: String })
   update(
-    @Param('id') id: string,
-    @Body() updateWorkspaceDto: UpdateWorkspaceDto
-  ) {
-    return this.workspacesService.update(+id, updateWorkspaceDto)
+    @Param('id', ParseMongoIdPipePipe) id: Types.ObjectId,
+    @Body() updateWorkspaceDto: UpdateWorkspaceDto,
+    @Req() req: any
+  ): Promise<Workspace> {
+    return this.workspacesService.update(id, updateWorkspaceDto, req.user.sub)
   }
 
   @Delete(':id')

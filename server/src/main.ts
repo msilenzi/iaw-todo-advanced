@@ -62,7 +62,7 @@ async function bootstrap() {
         // this will pre-fill the client id in the Swagger authorization form
         clientId: config.AUTH0_CLIENT_ID,
       },
-      oauth2RedirectUrl: 'http://localhost:3000/api/oauth2-redirect.html',
+      oauth2RedirectUrl: `http://localhost:${config.PORT}/api/oauth2-redirect.html`,
     },
   }
 

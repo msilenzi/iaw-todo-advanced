@@ -61,7 +61,8 @@ export class WorkspacesController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.workspacesService.remove(+id)
+  @ApiOperation({ summary: 'Delete a workspace' })
+  remove(@Param('id') id: Types.ObjectId, @Req() req: any) {
+    return this.workspacesService.remove(id, req.user.sub)
   }
 }

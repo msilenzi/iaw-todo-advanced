@@ -60,7 +60,14 @@ export class WorkspacesService {
     return workspace.save()
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} workspace`
+  async remove(workspaceId: Types.ObjectId, userId: string) {
+    const workspace = await this.findOne(workspaceId, userId)
+    if (workspace.owner !== userId) {
+      throw new ForbiddenException(
+        'You do not have permission to delete this workspace'
+      )
+    }
+    workspace.isActive = false
+    workspace.save()
   }
 }

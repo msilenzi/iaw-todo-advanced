@@ -12,7 +12,7 @@ import {
 import { AuthGuard } from '@nestjs/passport'
 import { ApiBearerAuth, ApiOperation, ApiParam } from '@nestjs/swagger'
 import { Types } from 'mongoose'
-import { ParseMongoIdPipePipe } from 'src/common/pipes/parse-mongo-id-pipe.pipe'
+import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id-pipe.pipe'
 import { CreateWorkspaceDto } from './dto/create-workspace.dto'
 import { UpdateWorkspaceDto } from './dto/update-workspace.dto'
 import { Workspace } from './schemas/workspace.schema'
@@ -43,7 +43,7 @@ export class WorkspacesController {
   @ApiOperation({ summary: 'Get details of a specific workspace' })
   @ApiParam({ name: 'workspaceId', type: String })
   findOne(
-    @Param('workspaceId', ParseMongoIdPipePipe) workspaceId: Types.ObjectId,
+    @Param('workspaceId', ParseMongoIdPipe) workspaceId: Types.ObjectId,
     @Req() req: any
   ): Promise<Workspace> {
     return this.workspacesService.findOne(workspaceId, req.user.sub)
@@ -53,7 +53,7 @@ export class WorkspacesController {
   @ApiOperation({ summary: 'Update workspace details' })
   @ApiParam({ name: 'workspaceId', type: String })
   update(
-    @Param('workspaceId', ParseMongoIdPipePipe) workspaceId: Types.ObjectId,
+    @Param('workspaceId', ParseMongoIdPipe) workspaceId: Types.ObjectId,
     @Body() updateWorkspaceDto: UpdateWorkspaceDto,
     @Req() req: any
   ): Promise<Workspace> {
@@ -67,7 +67,7 @@ export class WorkspacesController {
   @Delete(':workspaceId')
   @ApiOperation({ summary: 'Delete a workspace' })
   remove(
-    @Param('workspaceId', ParseMongoIdPipePipe) workspaceId: Types.ObjectId,
+    @Param('workspaceId', ParseMongoIdPipe) workspaceId: Types.ObjectId,
     @Req() req: any
   ) {
     return this.workspacesService.remove(workspaceId, req.user.sub)

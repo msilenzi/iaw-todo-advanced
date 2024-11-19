@@ -32,11 +32,7 @@ export class WorkspacesService {
   }
 
   async findOne(workspaceId: Types.ObjectId, userId: string) {
-    const workspace = await this.workspaceModel.findById(workspaceId).exec()
-
-    if (!workspace) {
-      throw new NotFoundException(`Workspace with ID ${workspaceId} not found`)
-    }
+    const workspace = await this._findById(workspaceId)
     if (workspace.owner !== userId && !workspace.members.includes(userId)) {
       throw new ForbiddenException(
         'You do not have permission to access this workspace'
@@ -50,7 +46,7 @@ export class WorkspacesService {
     updateWorkspaceDto: UpdateWorkspaceDto,
     userId: string
   ) {
-    const workspace = await this.findOne(workspaceId, userId)
+    const workspace = await this._findById(workspaceId)
     if (workspace.owner !== userId) {
       throw new ForbiddenException(
         'You do not have permission to modify this workspace'
@@ -61,7 +57,7 @@ export class WorkspacesService {
   }
 
   async remove(workspaceId: Types.ObjectId, userId: string) {
-    const workspace = await this.findOne(workspaceId, userId)
+    const workspace = await this._findById(workspaceId)
     if (workspace.owner !== userId) {
       throw new ForbiddenException(
         'You do not have permission to delete this workspace'
@@ -69,5 +65,13 @@ export class WorkspacesService {
     }
     workspace.isActive = false
     workspace.save()
+  }
+
+  async _findById(workspaceId: Types.ObjectId) {
+    const workspace = await this.workspaceModel.findById(workspaceId).exec()
+    if (!workspace) {
+      throw new NotFoundException(`Workspace with ID ${workspaceId} not found`)
+    }
+    return workspace
   }
 }

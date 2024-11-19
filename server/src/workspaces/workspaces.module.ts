@@ -4,6 +4,8 @@ import { WorkspaceMembersController } from './controllers/workspace-members.cont
 import { WorkspaceRequestsController } from './controllers/workspace-requests.controller'
 import { WorkspacesController } from './controllers/workspaces.controller'
 import { Workspace, WorkspaceSchema } from './schemas/workspace.schema'
+import { WorkspaceMembersService } from './services/workspace-members.service'
+import { WorkspaceRequestsService } from './services/workspace-requests.service'
 import { WorkspacesService } from './services/workspaces.service'
 
 @Module({
@@ -17,6 +19,10 @@ import { WorkspacesService } from './services/workspaces.service'
     WorkspaceMembersController,
     WorkspaceRequestsController,
   ],
-  providers: [WorkspacesService],
+  providers: [
+    WorkspacesService,
+    WorkspaceRequestsService,
+    WorkspaceMembersService,
+  ],
 })
 export class WorkspacesModule {}

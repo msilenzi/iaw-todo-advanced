@@ -25,10 +25,10 @@ import {
 } from '@nestjs/swagger'
 import { Types } from 'mongoose'
 import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id-pipe.pipe'
-import { CreateWorkspaceDto } from './dto/create-workspace.dto'
-import { UpdateWorkspaceDto } from './dto/update-workspace.dto'
-import { Workspace } from './schemas/workspace.schema'
-import { WorkspacesService } from './workspaces.service'
+import { CreateWorkspaceDto } from '../dto/create-workspace.dto'
+import { UpdateWorkspaceDto } from '../dto/update-workspace.dto'
+import { Workspace } from '../schemas/workspace.schema'
+import { WorkspacesService } from '../services/workspaces.service'
 
 @Controller('workspaces')
 @ApiBearerAuth('Auth0')

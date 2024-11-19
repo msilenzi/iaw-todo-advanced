@@ -5,9 +5,9 @@ import {
 } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model, Types } from 'mongoose'
-import { CreateWorkspaceDto } from './dto/create-workspace.dto'
-import { UpdateWorkspaceDto } from './dto/update-workspace.dto'
-import { Workspace } from './schemas/workspace.schema'
+import { CreateWorkspaceDto } from '../dto/create-workspace.dto'
+import { UpdateWorkspaceDto } from '../dto/update-workspace.dto'
+import { Workspace } from '../schemas/workspace.schema'
 
 @Injectable()
 export class WorkspacesService {

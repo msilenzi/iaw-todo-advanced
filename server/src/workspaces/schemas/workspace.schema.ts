@@ -17,7 +17,13 @@ export class Workspace {
   members: string[]
 
   @Prop({ required: false, type: [String], default: [] })
-  blockedUsers: string[]
+  blockedMembers: string[]
+
+  @Prop({ required: false, type: [String], default: [] })
+  pendingRequests: string[]
+
+  @Prop({ required: false, type: [String], default: [] })
+  rejectedRequests: string[]
 
   @Prop({ required: false, default: true })
   isActive: boolean

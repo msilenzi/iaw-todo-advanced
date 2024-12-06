@@ -5,11 +5,24 @@ import {
   SwaggerCustomOptions,
   SwaggerModule,
 } from '@nestjs/swagger'
+import { ValidationPipe } from '@nestjs/common'
+import config from './config'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
   app.setGlobalPrefix('api/v1')
+
+  //
+  // Validations
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    }),
+  )
 
   //
   // Swagger
@@ -30,7 +43,7 @@ async function bootstrap() {
   //
   // Listen
 
-  await app.listen(3000)
+  await app.listen(config.PORT ?? 3000)
 }
 
 bootstrap()

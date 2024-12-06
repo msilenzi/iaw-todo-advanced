@@ -1,5 +1,5 @@
 import { plainToInstance } from 'class-transformer'
-import { IsInt, IsOptional, validateSync } from 'class-validator'
+import { IsInt, IsOptional, IsString, validateSync } from 'class-validator'
 import { config as dotenvConfig } from 'dotenv'
 
 dotenvConfig({ path: '.env' })
@@ -8,6 +8,9 @@ class EnvironmentVariables {
   @IsInt()
   @IsOptional()
   readonly PORT?: number
+
+  @IsString()
+  readonly MONGODB_URI: string
 }
 
 function validateConfig(config: Record<string, unknown>) {

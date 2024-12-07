@@ -1,12 +1,10 @@
-import { Transform } from 'class-transformer'
-import { IsEmail, IsString, MinLength } from 'class-validator'
+import { IsEmail } from 'class-validator'
+import { IsPassword } from 'src/common/decorators/is-password.decorator'
 
 export class LogInDto {
   @IsEmail()
   readonly email: string
 
-  @IsString()
-  @MinLength(6)
-  @Transform(({ value }) => value.trim())
+  @IsPassword()
   readonly password: string
 }

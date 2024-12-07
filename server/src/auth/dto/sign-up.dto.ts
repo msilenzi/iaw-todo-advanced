@@ -1,23 +1,13 @@
-import { Transform } from 'class-transformer'
-import {
-  IsDateString,
-  IsEmail,
-  IsEnum,
-  IsNotEmpty,
-  IsString,
-  MinLength,
-} from 'class-validator'
+import { IsDateString, IsEmail, IsEnum } from 'class-validator'
+import { IsPassword } from 'src/common/decorators/is-password.decorator'
+import { IsTrimmedString } from 'src/common/decorators/is-trimmed-string.decorator'
 import { Gender } from 'src/users/schemas/user.schema'
 
 export class SignUpDto {
-  @IsString()
-  @IsNotEmpty()
-  @Transform(({ value }) => value.trim())
+  @IsTrimmedString()
   readonly firstName: string
 
-  @IsString()
-  @IsNotEmpty()
-  @Transform(({ value }) => value.trim())
+  @IsTrimmedString()
   readonly lastName: string
 
   @IsEmail()
@@ -29,8 +19,6 @@ export class SignUpDto {
   @IsEnum(Gender)
   readonly gender: Gender
 
-  @IsString()
-  @MinLength(6)
-  @Transform(({ value }) => value.trim())
+  @IsPassword()
   readonly password: string
 }

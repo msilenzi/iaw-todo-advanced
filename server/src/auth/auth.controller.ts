@@ -1,10 +1,16 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common'
-import { AuthService } from './auth.service'
+import {
+  Body,
+  Controller,
+  HttpCode,
+  Post,
+  UseInterceptors,
+} from '@nestjs/common'
 import { ApiOperation } from '@nestjs/swagger'
-import { SignUpDto } from './dto/sign-up.dto'
-import { LogInDto } from './dto/log-in.dto'
+import { SerializerInterceptor } from 'src/common/interceptors/serializer.interceptor'
+import { AuthService } from './auth.service'
 import { LogInResponseDto } from './dto/log-in-response.dto'
-import { plainToInstance } from 'class-transformer'
+import { LogInDto } from './dto/log-in.dto'
+import { SignUpDto } from './dto/sign-up.dto'
 
 @Controller('auth')
 export class AuthController {
@@ -19,11 +25,8 @@ export class AuthController {
 
   @Post('login')
   @ApiOperation({ summary: 'Autentica a un usuario con su email y contraseña' })
+  @UseInterceptors(new SerializerInterceptor(LogInResponseDto))
   async logIn(@Body() logInDto: LogInDto): Promise<LogInResponseDto> {
-    return plainToInstance(
-      LogInResponseDto,
-      await this.authService.logIn(logInDto),
-      { excludeExtraneousValues: true, enableImplicitConversion: true },
-    )
+    return await this.authService.logIn(logInDto)
   }
 }

@@ -11,6 +11,9 @@ class EnvironmentVariables {
 
   @IsString()
   readonly MONGODB_URI: string
+
+  @IsString()
+  readonly JWT_SECRET_KEY: string
 }
 
 function validateConfig(config: Record<string, unknown>) {

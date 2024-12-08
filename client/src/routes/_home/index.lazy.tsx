@@ -1,3 +1,5 @@
+import HomeHero from '@/home/components/HomeHero'
+import HomeNavbar from '@/home/components/HomeNavbar'
 import { createLazyFileRoute } from '@tanstack/react-router'
 
 export const Route = createLazyFileRoute('/_home/')({
@@ -5,5 +7,10 @@ export const Route = createLazyFileRoute('/_home/')({
 })
 
 function RouteComponent() {
-  return <div>Hello &quot;/_home/&quot;!</div>
+  return (
+    <>
+      <HomeNavbar />
+      <HomeHero />
+    </>
+  )
 }

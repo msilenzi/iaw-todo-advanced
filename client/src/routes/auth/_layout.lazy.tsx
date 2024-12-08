@@ -1,19 +1,26 @@
 import { Container, Paper, Title } from '@mantine/core'
 import { createLazyFileRoute, Link, Outlet } from '@tanstack/react-router'
+import { useEffect } from 'react'
 
 export const Route = createLazyFileRoute('/auth/_layout')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
+  useEffect(() => {
+    const defaultBgColor = document.body.style.backgroundColor
+    document.body.style.backgroundColor = 'var(--mantine-color-dark-9)'
+    return () => void (document.body.style.backgroundColor = defaultBgColor)
+  }, [])
+
   return (
-    <Container size="xs" mt="10vh">
+    <Container size="432" mt="10vh">
       <Link to="/" style={{ color: 'unset', textDecoration: 'none' }}>
         <Title ta="center" pb="lg">
           Floorplan
         </Title>
       </Link>
-      <Paper bg="dark.6" shadow="lg" withBorder radius="md" p="lg">
+      <Paper shadow="sm" radius="md" p="xl" mb="md">
         <Outlet />
       </Paper>
     </Container>

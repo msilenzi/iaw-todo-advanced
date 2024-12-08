@@ -1,3 +1,4 @@
+import HomeFeaturesSection from '@/home/components/HomeFeaturesSection'
 import HomeHero from '@/home/components/HomeHero'
 import HomeNavbar from '@/home/components/HomeNavbar'
 import { createLazyFileRoute } from '@tanstack/react-router'
@@ -11,6 +12,7 @@ function RouteComponent() {
     <>
       <HomeNavbar />
       <HomeHero />
+      <HomeFeaturesSection />
     </>
   )
 }

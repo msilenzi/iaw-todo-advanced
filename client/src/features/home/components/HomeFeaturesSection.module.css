@@ -1,0 +1,23 @@
+.title {
+  font-size: 1.5rem;
+
+  @media (min-width: $mantine-breakpoint-sm) {
+    font-size: 2rem;
+  }
+}
+
+.description {
+  max-width: 600px;
+  margin: auto;
+
+  &::after {
+    content: '';
+    display: block;
+    background-color: var(--mantine-color-blue-filled);
+    width: 45px;
+    height: 2px;
+    margin-top: var(--mantine-spacing-sm);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

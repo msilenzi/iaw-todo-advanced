@@ -9,6 +9,7 @@ import {
 } from '@mantine/core'
 
 import classes from './HomeHero.module.css'
+import { Link } from '@tanstack/react-router'
 
 export default function HomeHero() {
   const theme = useMantineTheme()
@@ -46,7 +47,8 @@ export default function HomeHero() {
           className={classes.control}
           variant="gradient"
           gradient={{ from: 'blue', to: 'cyan' }}
-          onClick={() => console.log('registrarse')}
+          component={Link}
+          to="/auth/signup"
         >
           Registrarse
         </Button>

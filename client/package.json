@@ -20,6 +20,7 @@
     "@mantine/hooks": "^7.14.3",
     "@openapitools/openapi-generator-cli": "^2.15.3",
     "@tabler/icons-react": "^3.24.0",
+    "@tanstack/react-query": "^5.62.7",
     "@tanstack/react-router": "^1.87.0",
     "axios": "^1.7.9",
     "dayjs": "^1.11.13",
@@ -28,6 +29,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
+    "@tanstack/eslint-plugin-query": "^5.62.1",
+    "@tanstack/react-query-devtools": "^5.62.7",
     "@tanstack/router-devtools": "^1.87.0",
     "@tanstack/router-plugin": "^1.86.0",
     "@types/react": "^18.3.12",

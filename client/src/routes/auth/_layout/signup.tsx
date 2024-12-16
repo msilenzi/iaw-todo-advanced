@@ -1,3 +1,4 @@
+import { SignUpDtoGenderEnum } from '@Common/api/generated'
 import {
   Button,
   NativeSelect,
@@ -11,18 +12,11 @@ import { DatePickerInput } from '@mantine/dates'
 import { useForm } from '@mantine/form'
 import { createFileRoute, Link } from '@tanstack/react-router'
 
-//TODO: borrar y usar el enum de la API
-enum Gender {
-  MALE = 'male',
-  FEMALE = 'female',
-  OTHER = 'other',
-}
-
 type SignupForm = {
   firstName: string
   lastName: string
   dateOfBirth: Date | null
-  gender: Gender | ''
+  gender: SignUpDtoGenderEnum | ''
   email: string
   password: string
   confirmPassword: string
@@ -104,6 +98,7 @@ function RouteComponent() {
           <DatePickerInput
             label="Fecha de nacimiento"
             placeholder="Fecha de nacimiento"
+            valueFormat="DD/MM/YYYY"
             withAsterisk
             key={form.key('dateOfBirth')}
             {...form.getInputProps('dateOfBirth')}
@@ -112,9 +107,9 @@ function RouteComponent() {
             label="Género"
             data={[
               { label: 'Género', value: '', disabled: true },
-              { label: 'Femenino', value: Gender.FEMALE },
-              { label: 'Masculino', value: Gender.MALE },
-              { label: 'Otro', value: Gender.OTHER },
+              { label: 'Femenino', value: SignUpDtoGenderEnum.Female },
+              { label: 'Masculino', value: SignUpDtoGenderEnum.Male },
+              { label: 'Otro', value: SignUpDtoGenderEnum.Other },
             ]}
             withAsterisk
             key={form.key('gender')}

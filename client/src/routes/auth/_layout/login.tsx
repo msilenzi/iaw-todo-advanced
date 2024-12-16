@@ -26,12 +26,22 @@ function RouteComponent() {
             withAsterisk
             autoFocus
           />
-          <PasswordInput
-            label="Contraseña"
-            placeholder="Contraseña"
-            withAsterisk
-          />
-
+          <div>
+            <PasswordInput
+              label="Contraseña"
+              placeholder="Contraseña"
+              withAsterisk
+            />
+            <Text
+              size="sm"
+              c="dimmed"
+              td="underline"
+              component={Link}
+              to="/auth/login"
+            >
+              ¿Olvidaste tu contraseña?
+            </Text>
+          </div>
           <Button
             variant="gradient"
             gradient={{ from: 'blue', to: 'cyan' }}

@@ -19,10 +19,10 @@ export default function HomeHero() {
     colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1]
 
   return (
-    <Paper shadow="sm" bg={bgColor}>
+    <Paper shadow="sm" bg={bgColor} flex={1}>
       <Container className={classes.inner}>
         <Text fw={900} tt="uppercase" c="dimmed" size="xl" pb="xs">
-          Floorplan
+          Todo Advanced
         </Text>
         <Title className={classes.title}>
           Gestiona tus{' '}
@@ -32,14 +32,14 @@ export default function HomeHero() {
             gradient={{ from: 'blue', to: 'cyan' }}
             inherit
           >
-            proyectos de construcción
+            proyectos
           </Text>{' '}
           de forma eficiente
         </Title>
         <Text className={classes.description} c="dimmed">
-          Centralizá el control de tus planos, proyectos y organizaciones.
-          Aprovechá el poder de nuestra IA para descomponer tus planos en
-          segundos.
+          Centralizá el control de tus proyectos y tareas. Lleva la organización
+          de tus proyectos al siguiente nivel con nuestra poderosa herramienta
+          de organziación.
         </Text>
         <Button
           size="xl"

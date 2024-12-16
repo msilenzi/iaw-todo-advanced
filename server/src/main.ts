@@ -28,14 +28,14 @@ async function bootstrap() {
   // Swagger
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Floorplan API')
+    .setTitle('Todo Advanced API')
     .setVersion('1.0')
     .build()
 
   const documentFactory = () => SwaggerModule.createDocument(app, swaggerConfig)
 
   const customOptions: SwaggerCustomOptions = {
-    customSiteTitle: 'Floorplan API',
+    customSiteTitle: 'Todo Advanced API',
   }
 
   SwaggerModule.setup('docs', app, documentFactory, customOptions)

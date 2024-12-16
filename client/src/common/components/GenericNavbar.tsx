@@ -20,7 +20,7 @@ function GenericNavbar({ children }: GenericNavbarProps) {
 function GenericNavbarTitle() {
   return (
     <Link to="/" style={{ color: 'unset', textDecoration: 'none' }}>
-      <Title order={3}>Floorplan</Title>
+      <Title order={3}>Todo Advanced</Title>
     </Link>
   )
 }

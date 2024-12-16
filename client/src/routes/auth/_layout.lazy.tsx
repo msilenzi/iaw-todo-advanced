@@ -17,7 +17,7 @@ function RouteComponent() {
     <Container size="432" mt="10vh">
       <Link to="/" style={{ color: 'unset', textDecoration: 'none' }}>
         <Title ta="center" pb="lg">
-          Floorplan
+          Todo Advanced
         </Title>
       </Link>
       <Paper shadow="sm" radius="md" p="xl" mb="md">

@@ -1,5 +1,9 @@
-import { AuthApi } from './generated'
+import { AuthApi, Configuration } from './generated'
 
-const authApi = new AuthApi()
+const config = new Configuration({
+  basePath: import.meta.env.VITE_API_BASE_URL,
+})
+
+const authApi = new AuthApi(config)
 
 export default authApi

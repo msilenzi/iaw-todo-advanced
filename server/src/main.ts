@@ -1,12 +1,13 @@
+import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
-import { AppModule } from './app.module'
 import {
   DocumentBuilder,
   SwaggerCustomOptions,
   SwaggerDocumentOptions,
   SwaggerModule,
 } from '@nestjs/swagger'
-import { ValidationPipe } from '@nestjs/common'
+import * as cookieParser from 'cookie-parser'
+import { AppModule } from './app.module'
 import config from './config'
 
 async function bootstrap() {
@@ -14,6 +15,7 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api/v1')
   app.enableCors()
+  app.use(cookieParser())
 
   //
   // Validations

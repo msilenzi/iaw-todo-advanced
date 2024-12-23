@@ -8,7 +8,9 @@ import { JwtPayload } from './auth.types'
 import { JwtService } from '@nestjs/jwt'
 import { Response } from 'express'
 
-export const AUTH_COOKIE_KEY = 'auth_token'
+export const enum AuthCookiesKeys {
+  AccessToken = 'access_token',
+}
 
 @Injectable()
 export class AuthService {
@@ -36,7 +38,7 @@ export class AuthService {
     const payload: JwtPayload = { sub: user._id.toString() }
     const token = await this.jwtService.signAsync(payload)
 
-    res.cookie(AUTH_COOKIE_KEY, token, {
+    res.cookie(AuthCookiesKeys.AccessToken, token, {
       httpOnly: true,
       secure: false,
       sameSite: 'strict',
@@ -47,6 +49,6 @@ export class AuthService {
   }
 
   logout(res: Response): void {
-    res.clearCookie(AUTH_COOKIE_KEY)
+    res.clearCookie(AuthCookiesKeys.AccessToken)
   }
 }

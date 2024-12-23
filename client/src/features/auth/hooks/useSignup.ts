@@ -1,12 +1,12 @@
 import authApi from '@Common/api/auth.api'
 import { SignUpDtoGenderEnum } from '@Common/api/generated'
 import useNotifications from '@Common/hooks/useNotifications'
-import { useForm } from '@mantine/form'
+import { isEmail, useForm } from '@mantine/form'
 import { useNavigate } from '@tanstack/react-router'
 import { isAxiosError } from 'axios'
 import { useState } from 'react'
 
-export type SignupForm = {
+type SignupForm = {
   firstName: string
   lastName: string
   dateOfBirth: Date | null
@@ -41,10 +41,9 @@ export default function useSignup() {
         value === null ? 'La fecha de nacimiento es obligatoria' : null,
       gender: (value) => (value === '' ? 'El género es obligatorio' : null),
       email: (value) =>
-        value.trim().length === 0 ? 'El correo es obligatorio'
-        : !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(value.trim()) ?
-          'El correo es incorrecto'
-        : null,
+        value.trim().length === 0 ?
+          'El correo es obligatorio'
+        : (isEmail('El correo no es válido')(value) as string | null),
       password: (value) =>
         value.trim().length === 0 ? 'La contraseña es obligatoria'
         : value.trim().length < 6 ?

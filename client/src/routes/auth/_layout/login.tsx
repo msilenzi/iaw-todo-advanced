@@ -1,3 +1,4 @@
+import useLogin from '@/auth/hooks/useLogin'
 import {
   Button,
   PasswordInput,
@@ -13,49 +14,66 @@ export const Route = createFileRoute('/auth/_layout/login')({
 })
 
 function RouteComponent() {
+  const { form, handleSubmit } = useLogin()
+
   return (
     <>
       <Title ta="center" order={2} mb="md">
         Iniciar sesión
       </Title>
-      <form>
-        <Stack>
-          <TextInput
-            label="Correo"
-            placeholder="Correo"
-            withAsterisk
-            autoFocus
-          />
-          <div>
-            <PasswordInput
-              label="Contraseña"
-              placeholder="Contraseña"
+      <form onSubmit={handleSubmit}>
+        <fieldset
+          disabled={false}
+          style={{ margin: 0, padding: 0, border: 'none' }}
+        >
+          <Stack>
+            <TextInput
+              label="Correo"
+              placeholder="Correo"
               withAsterisk
+              autoFocus
+              key={form.key('email')}
+              {...form.getInputProps('email')}
             />
-            <Text
-              size="sm"
-              c="dimmed"
-              td="underline"
-              component={Link}
-              to="/auth/login"
+            <div>
+              <PasswordInput
+                label="Contraseña"
+                placeholder="Contraseña"
+                withAsterisk
+                key={form.key('password')}
+                {...form.getInputProps('password')}
+              />
+              <Text
+                size="sm"
+                c="dimmed"
+                td="underline"
+                component={Link}
+                to="/auth/login"
+              >
+                ¿Olvidaste tu contraseña?
+              </Text>
+            </div>
+            <Button
+              variant="gradient"
+              gradient={{ from: 'blue', to: 'cyan' }}
+              mt="md"
+              type="submit"
             >
-              ¿Olvidaste tu contraseña?
+              Iniciar sesión
+            </Button>
+            <Text size="sm" ta="center" mt="xs" c="dimmed">
+              ¿No tenés una cuenta?{' '}
+              <Text
+                c="dark.1"
+                td="underline"
+                component={Link}
+                to="/auth/signup"
+              >
+                Crear cuenta
+              </Text>
             </Text>
-          </div>
-          <Button
-            variant="gradient"
-            gradient={{ from: 'blue', to: 'cyan' }}
-            mt="md"
-          >
-            Iniciar sesión
-          </Button>
-          <Text size="sm" ta="center" mt="xs" c="dimmed">
-            ¿No tenés una cuenta?{' '}
-            <Text c="dark.1" td="underline" component={Link} to="/auth/signup">
-              Crear cuenta
-            </Text>
-          </Text>
-        </Stack>
+          </Stack>
+        </fieldset>
       </form>
     </>
   )

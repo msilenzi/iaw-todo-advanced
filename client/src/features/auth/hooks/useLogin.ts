@@ -1,4 +1,4 @@
-import authApi from '@Common/api/auth.api'
+import { authApi } from '@Common/api'
 import { isEmail, useForm } from '@mantine/form'
 
 type LoginForm = {

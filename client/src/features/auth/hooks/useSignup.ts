@@ -1,4 +1,4 @@
-import authApi from '@Common/api/auth.api'
+import { authApi } from '@Common/api'
 import { FullUserDtoGenderEnum } from '@Common/api/generated'
 import useNotifications from '@Common/hooks/useNotifications'
 import { isEmail, useForm } from '@mantine/form'

@@ -1,4 +1,5 @@
 import useLogin from '@/auth/hooks/useLogin'
+import { useStore } from '@Common/store'
 import {
   Button,
   PasswordInput,
@@ -15,6 +16,8 @@ export const Route = createFileRoute('/auth/_layout/login')({
 
 function RouteComponent() {
   const { form, handleSubmit } = useLogin()
+  const isLoading = useStore((state) => state.isLoading)
+  const error = useStore((state) => state.error)
 
   return (
     <>
@@ -23,7 +26,7 @@ function RouteComponent() {
       </Title>
       <form onSubmit={handleSubmit}>
         <fieldset
-          disabled={false}
+          disabled={isLoading}
           style={{ margin: 0, padding: 0, border: 'none' }}
         >
           <Stack>
@@ -58,9 +61,19 @@ function RouteComponent() {
               gradient={{ from: 'blue', to: 'cyan' }}
               mt="md"
               type="submit"
+              disabled={isLoading}
+              loading={isLoading}
+              loaderProps={{ type: 'dots' }}
             >
-              Iniciar sesión
+              {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
             </Button>
+            <Text
+              size="sm"
+              ta="center"
+              style={{ color: 'var(--mantine-color-error)' }}
+            >
+              {error}
+            </Text>
             <Text size="sm" ta="center" mt="xs" c="dimmed">
               ¿No tenés una cuenta?{' '}
               <Text

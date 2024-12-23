@@ -1,5 +1,6 @@
-import { authApi } from '@Common/api'
+import { useStore } from '@Common/store'
 import { isEmail, useForm } from '@mantine/form'
+import { useNavigate } from '@tanstack/react-router'
 
 type LoginForm = {
   email: string
@@ -7,6 +8,9 @@ type LoginForm = {
 }
 
 export default function useLogin() {
+  const navigate = useNavigate()
+  const login = useStore((state) => state.login)
+
   const form = useForm<LoginForm>({
     mode: 'uncontrolled',
     initialValues: {
@@ -32,11 +36,9 @@ export default function useLogin() {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     form.onSubmit(async (values) => {
-      try {
-        const resp = await authApi.login(values)
-        console.log(resp)
-      } catch (error) {
-        console.log(error)
+      const ok = await login(values)
+      if (ok) {
+        void navigate({ to: '/' })
       }
     })(e)
   }

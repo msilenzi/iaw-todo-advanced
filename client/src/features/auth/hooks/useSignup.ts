@@ -93,10 +93,7 @@ export default function useSignup() {
 
           console.log({ status, data })
 
-          if (
-            status === 400 &&
-            data.message === 'Ya existe un usuario con este correo.'
-          ) {
+          if (data.message === 'Ya existe un usuario con este correo.') {
             form.setErrors({ email: 'Ya existe una cuenta con este correo' })
           } else if (status >= 400 && status < 500) {
             showErrorNotification({

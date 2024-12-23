@@ -8,7 +8,7 @@ import { JwtPayload } from './auth.types'
 import { JwtService } from '@nestjs/jwt'
 import { Response } from 'express'
 
-const AUTH_COOKIE_KEY = 'auth_token'
+export const AUTH_COOKIE_KEY = 'auth_token'
 
 @Injectable()
 export class AuthService {

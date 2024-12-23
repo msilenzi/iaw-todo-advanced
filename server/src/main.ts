@@ -9,6 +9,7 @@ import {
 import * as cookieParser from 'cookie-parser'
 import { AppModule } from './app.module'
 import config from './config'
+import { AUTH_COOKIE_KEY } from './auth/auth.service'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -35,6 +36,7 @@ async function bootstrap() {
     .setTitle('Todo Advanced API')
     .setDescription('Todo Advanced API description')
     .setVersion('1.0')
+    .addCookieAuth(AUTH_COOKIE_KEY)
     .build()
 
   const options: SwaggerDocumentOptions = {

@@ -1,10 +1,9 @@
-import HomeHero from '@/home/components/HomeHero'
-import HomeNavbar from '@/home/components/HomeNavbar'
+import AuthenticatedNavbar from '@Common/components/AuthenticatedNavbar'
 import { useStore } from '@Common/store'
 import { Flex, Loader } from '@mantine/core'
-import { createLazyFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, Outlet, useNavigate } from '@tanstack/react-router'
 
-export const Route = createLazyFileRoute('/_home/')({
+export const Route = createFileRoute('/_protected')({
   component: RouteComponent,
 })
 
@@ -21,14 +20,14 @@ function RouteComponent() {
     )
   }
 
-  if (isAuthenticated) {
-    void navigate({ to: '/projects' })
+  if (!isAuthenticated) {
+    void navigate({ to: '/auth/login' })
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh' }}>
-      <HomeNavbar />
-      <HomeHero />
-    </div>
+    <>
+      <AuthenticatedNavbar />
+      <Outlet />
+    </>
   )
 }

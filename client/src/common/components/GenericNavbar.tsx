@@ -10,7 +10,7 @@ type GenericNavbarProps = {
 function GenericNavbar({ children }: GenericNavbarProps) {
   return (
     <header className={classes.header}>
-      <Container size="md">
+      <Container fluid>
         <Group justify="space-between">{children}</Group>
       </Container>
     </header>

@@ -1,5 +1,5 @@
 import useSignup from '@/auth/hooks/useSignup'
-import { SignUpDtoGenderEnum } from '@Common/api/generated'
+import { FullUserDtoGenderEnum } from '@Common/api/generated'
 import {
   Button,
   NativeSelect,
@@ -58,9 +58,9 @@ function RouteComponent() {
               label="Género"
               data={[
                 { label: 'Género', value: '', disabled: true },
-                { label: 'Femenino', value: SignUpDtoGenderEnum.Female },
-                { label: 'Masculino', value: SignUpDtoGenderEnum.Male },
-                { label: 'Otro', value: SignUpDtoGenderEnum.Other },
+                { label: 'Femenino', value: FullUserDtoGenderEnum.Female },
+                { label: 'Masculino', value: FullUserDtoGenderEnum.Male },
+                { label: 'Otro', value: FullUserDtoGenderEnum.Other },
               ]}
               withAsterisk
               key={form.key('gender')}

@@ -33,7 +33,7 @@ export default function useLogin() {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     form.onSubmit(async (values) => {
       try {
-        const resp = await authApi.logIn(values)
+        const resp = await authApi.login(values)
         console.log(resp)
       } catch (error) {
         console.log(error)

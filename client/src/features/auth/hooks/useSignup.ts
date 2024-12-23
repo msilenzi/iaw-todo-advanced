@@ -1,5 +1,5 @@
 import authApi from '@Common/api/auth.api'
-import { SignUpDtoGenderEnum } from '@Common/api/generated'
+import { FullUserDtoGenderEnum } from '@Common/api/generated'
 import useNotifications from '@Common/hooks/useNotifications'
 import { isEmail, useForm } from '@mantine/form'
 import { useNavigate } from '@tanstack/react-router'
@@ -10,7 +10,7 @@ type SignupForm = {
   firstName: string
   lastName: string
   dateOfBirth: Date | null
-  gender: SignUpDtoGenderEnum | ''
+  gender: FullUserDtoGenderEnum | ''
   email: string
   password: string
   confirmPassword: string
@@ -74,7 +74,7 @@ export default function useSignup() {
       }
 
       try {
-        await authApi.signUp({
+        await authApi.signup({
           firstName: values.firstName,
           lastName: values.lastName,
           dateOfBirth: values.dateOfBirth.toISOString(),

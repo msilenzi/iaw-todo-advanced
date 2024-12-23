@@ -74,7 +74,7 @@ export default function useSignup() {
       }
 
       try {
-        const resp = await authApi.signUp({
+        await authApi.signUp({
           firstName: values.firstName,
           lastName: values.lastName,
           dateOfBirth: values.dateOfBirth.toISOString(),
@@ -82,7 +82,6 @@ export default function useSignup() {
           email: values.email,
           password: values.password,
         })
-        console.log(resp)
         showSuccessNotification({
           title: 'Cuenta creada con éxito',
           message: 'Ya puedes iniciar sesión con tu cuenta',
@@ -91,11 +90,19 @@ export default function useSignup() {
       } catch (error) {
         if (isAxiosError<Error>(error) && error.response) {
           const { status, data } = error.response
+
+          console.log({ status, data })
+
           if (
             status === 400 &&
             data.message === 'Ya existe un usuario con este correo.'
           ) {
             form.setErrors({ email: 'Ya existe una cuenta con este correo' })
+          } else if (status >= 400 && status < 500) {
+            showErrorNotification({
+              title: 'Ocurrió un error',
+              message: data.message ?? 'Ocurrió un error inesperado',
+            })
           } else {
             // Otros errores de servidor
             showErrorNotification({

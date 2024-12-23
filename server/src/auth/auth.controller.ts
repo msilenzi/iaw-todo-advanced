@@ -13,9 +13,8 @@ import { CustomThrottlerGuard } from 'src/common/guards/custom-throttler.guard'
 import { SerializerInterceptor } from 'src/common/interceptors/serializer.interceptor'
 import { FullUserDto } from 'src/users/dto/full-user.dto'
 import { AuthService } from './auth.service'
-import { LogInResponseDto } from './dto/log-in-response.dto'
-import { LogInDto } from './dto/log-in.dto'
-import { SignUpDto } from './dto/sign-up.dto'
+import { LoginDto } from './dto/login.dto'
+import { SignupDto } from './dto/signup.dto'
 
 @Controller('auth')
 @UseGuards(CustomThrottlerGuard)
@@ -25,18 +24,18 @@ export class AuthController {
   @Post('signup')
   @ApiOperation({ summary: 'Registra un nuevo usuario en el sistema' })
   @HttpCode(204)
-  async signUp(@Body() signUpDto: SignUpDto): Promise<void> {
-    await this.authService.signUp(signUpDto)
+  async signup(@Body() signupDto: SignupDto): Promise<void> {
+    await this.authService.signup(signupDto)
   }
 
   @Post('login')
   @ApiOperation({ summary: 'Autentica a un usuario con su email y contraseña' })
   @UseInterceptors(new SerializerInterceptor(FullUserDto))
   async login(
-    @Body() logInDto: LogInDto,
+    @Body() loginDto: LoginDto,
     @Res({ passthrough: true }) res: Response, // 1.
   ): Promise<FullUserDto> {
-    return await this.authService.logIn(logInDto, res)
+    return await this.authService.login(loginDto, res)
   }
 
   @Post('logout')

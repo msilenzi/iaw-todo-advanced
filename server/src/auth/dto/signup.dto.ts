@@ -3,7 +3,7 @@ import { IsPassword } from 'src/common/decorators/is-password.decorator'
 import { IsTrimmedString } from 'src/common/decorators/is-trimmed-string.decorator'
 import { Gender } from 'src/users/schemas/user.schema'
 
-export class SignUpDto {
+export class SignupDto {
   @IsTrimmedString()
   readonly firstName: string
 

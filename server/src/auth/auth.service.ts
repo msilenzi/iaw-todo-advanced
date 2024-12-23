@@ -1,8 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import * as bcrypt from 'bcrypt'
 import { UsersService } from 'src/users/users.service'
-import { SignUpDto } from './dto/sign-up.dto'
-import { LogInDto } from './dto/log-in.dto'
+import { SignupDto } from './dto/signup.dto'
+import { LoginDto } from './dto/login.dto'
 import { User } from 'src/users/schemas/user.schema'
 import { JwtPayload } from './auth.types'
 import { JwtService } from '@nestjs/jwt'
@@ -17,7 +17,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async signUp(signUpDto: SignUpDto): Promise<User> {
+  async signup(signUpDto: SignupDto): Promise<User> {
     const hasshedPassword = await bcrypt.hash(signUpDto.password, 10)
     return await this.usersService.create({
       ...signUpDto,
@@ -25,7 +25,7 @@ export class AuthService {
     })
   }
 
-  async logIn(logInDto: LogInDto, res: Response) {
+  async login(logInDto: LoginDto, res: Response) {
     const user = await this.usersService.findOneByEmail(logInDto.email)
     if (!user || !(await bcrypt.compare(logInDto.password, user.password))) {
       throw new UnauthorizedException(

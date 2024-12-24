@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import { Model } from 'mongoose'
+import { Model, Types } from 'mongoose'
 import { CreateUserDto } from './dto/create-user.dto'
 import { User } from './schemas/user.schema'
 
@@ -24,5 +24,9 @@ export class UsersService {
 
   findOneByEmail(email: string) {
     return this.userModel.findOne({ email }).exec()
+  }
+
+  findOneById(id: Types.ObjectId) {
+    return this.userModel.findById(id)
   }
 }

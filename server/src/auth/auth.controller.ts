@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   Post,
   Res,
@@ -12,15 +13,21 @@ import { Response } from 'express'
 import { CustomThrottlerGuard } from 'src/common/guards/custom-throttler.guard'
 import { SerializerInterceptor } from 'src/common/interceptors/serializer.interceptor'
 import { FullUserDto } from 'src/users/dto/full-user.dto'
+import { UsersService } from 'src/users/users.service'
 import { AuthService } from './auth.service'
+import { Protected } from './decorators/protected.decorator'
 import { LoginDto } from './dto/login.dto'
 import { SignupDto } from './dto/signup.dto'
-import { Protected } from './decorators/protected.decorator'
+import { UserId } from './decorators/user-id.decorator'
+import { Types } from 'mongoose'
 
 @Controller('auth')
 @UseGuards(CustomThrottlerGuard)
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly usersService: UsersService,
+  ) {}
 
   @Post('signup')
   @ApiOperation({ summary: 'Registra un nuevo usuario en el sistema' })
@@ -45,6 +52,14 @@ export class AuthController {
   @HttpCode(204)
   async logout(@Res({ passthrough: true }) res: Response): Promise<void> {
     this.authService.logout(res)
+  }
+
+  @Protected()
+  @Get('me')
+  @ApiOperation({ summary: 'Devuelve la información del usuario autenticado' })
+  @UseInterceptors(new SerializerInterceptor(FullUserDto))
+  async me(@UserId() userId: Types.ObjectId): Promise<FullUserDto> {
+    return this.usersService.findOneById(userId)
   }
 }
 

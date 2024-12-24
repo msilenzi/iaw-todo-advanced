@@ -15,6 +15,7 @@ import { FullUserDto } from 'src/users/dto/full-user.dto'
 import { AuthService } from './auth.service'
 import { LoginDto } from './dto/login.dto'
 import { SignupDto } from './dto/signup.dto'
+import { Protected } from './decorators/protected.decorator'
 
 @Controller('auth')
 @UseGuards(CustomThrottlerGuard)
@@ -38,6 +39,7 @@ export class AuthController {
     return await this.authService.login(loginDto, res)
   }
 
+  @Protected()
   @Post('logout')
   @ApiOperation({ summary: 'Elimina la cookie de sesión del usuario' })
   @HttpCode(204)
